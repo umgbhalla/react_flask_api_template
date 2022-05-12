@@ -229,9 +229,14 @@ function App() {
   const updateQuery = () => {
     const inputText = inputRef.current.value
     setQuery(inputText)
+    fetch(`/updateList/${inputText}`, {
+      method: 'POST',
+      mode: 'cors',
+      // body: JSON.stringify(jsonData), // body data type must match "Content-Type" header
+    })
   }
 
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(true)
   return (
     <>
       <Collapsible open={open} onOpenChange={setOpen}>
@@ -252,8 +257,8 @@ function App() {
         {typeof data.list === 'undefined' ? (
           <p>loading</p>
         ) : (
-          data.list.map((item) => (
-            <CollapsibleContent>
+          data.list.map((item, index) => (
+            <CollapsibleContent key={index}>
               <Repository>
                 <Text>{item}</Text>
               </Repository>
@@ -266,7 +271,7 @@ function App() {
 
       <Dialog>
         <DialogTrigger asChild>
-          <Button size='large'>Create Post request</Button>
+          <Button size='large'>Create POST request</Button>
         </DialogTrigger>
         <DialogContent>
           <DialogTitle>Item Contents</DialogTitle>
@@ -292,11 +297,10 @@ function App() {
 
       <GithubCorner
         href='https://gitlab.com/umgbhalla/react_flask_api'
-        bannerColor='#000'
-        octoColor='#fff'
+        bannerColor='#fff'
+        octoColor='#6252D0'
         size={80}
         direction='right'
-        svgStyle={{ mixBlendMode: 'darken' }}
       />
     </>
   )
