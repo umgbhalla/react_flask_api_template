@@ -6,7 +6,8 @@ app = Flask(__name__, static_folder="client/build", static_url_path="")
 CORS(app)
 
 
-mainList = {"list": ["item1", "item2", "item3", "item4"]}
+with open("my_dict.json", "w") as f:
+    json.dump({"list": ["item1", "item2", "item3", "item4"]}, f)
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -18,14 +19,21 @@ def serve():
 # get api
 @app.route("/getList", methods=["GET"])
 def getList():
+    with open("my_dict.json") as f:
+        mainList = json.load(f)
     return mainList
 
 
 # post api
 @app.route("/updateList/<new_item>", methods=["POST"])
 def updateList(new_item):
+    with open("my_dict.json") as f:
+        mainList = json.load(f)
     mainList["list"].append(new_item)
-    print(mainList)
+
+    with open("my_dict.json", "w") as f:
+        json.dump(mainList, f)
+    print(json.dumps(mainList, indent=4))
     return "Done", 201
 
 
