@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "allowedHosts": "all",
   "private": true,
-  "proxy": "https://fast-everglades-60007.herokuapp.com/",
+  "proxy": "http://127.0.0.1:5000",
   "dependencies": {
     "@radix-ui/colors": "^0.1.8",
     "@radix-ui/react-collapsible": "^0.1.6",

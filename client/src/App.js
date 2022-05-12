@@ -214,15 +214,6 @@ const Repository = styled('div', {
 function App() {
   const [data, setData] = useState([{}])
   const [query, setQuery] = useState('')
-  useEffect(() => {
-    fetch('/getList')
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data)
-        console.log(data)
-      })
-    console.log(`you have updated your query to ${query}`)
-  }, [query])
 
   const inputRef = React.createRef()
 
@@ -237,6 +228,16 @@ function App() {
   }
 
   const [open, setOpen] = React.useState(true)
+
+  useEffect(() => {
+    fetch('/getList')
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data)
+        console.log(data)
+      })
+  }, [query, open])
+
   return (
     <>
       <Collapsible open={open} onOpenChange={setOpen}>
