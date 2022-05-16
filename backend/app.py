@@ -10,10 +10,10 @@ with open("my_dict.json", "w") as f:
     json.dump({"list": ["item1", "item2", "item3", "item4"]}, f)
 
 
-@app.route("/", methods=["GET", "POST"])
-@cross_origin()
-def serve():
-    return send_from_directory(app.static_folder, "index.html")
+# @app.route("/", methods=["GET", "POST"])
+# @cross_origin()
+# def serve():
+#     return send_from_directory(app.static_folder, "index.html")
 
 
 # get api
