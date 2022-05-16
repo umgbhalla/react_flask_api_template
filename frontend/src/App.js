@@ -6,6 +6,11 @@ import { RowSpacingIcon, Cross2Icon } from '@radix-ui/react-icons'
 import * as CollapsiblePrimitive from '@radix-ui/react-collapsible'
 import GithubCorner from 'react-github-corner'
 import * as SeparatorPrimitive from '@radix-ui/react-separator'
+import axios from 'axios'
+
+const api = axios.create({
+  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000',
+})
 
 const StyledSeparator = styled(SeparatorPrimitive.Root, {
   backgroundColor: violet.violet6,
@@ -220,18 +225,15 @@ function App() {
   const updateQuery = () => {
     const inputText = inputRef.current.value
     setQuery(inputText)
-    fetch(`/updateList/${inputText}`, {
-      method: 'POST',
-      mode: 'cors',
-      // body: JSON.stringify(jsonData), // body data type must match "Content-Type" header
-    })
+    api.post(`/updateList/${inputText}`).then((res) => res.data)
   }
 
   const [open, setOpen] = React.useState(true)
 
   useEffect(() => {
-    fetch('/getList')
-      .then((res) => res.json())
+    api
+      .get('/getList')
+      .then((res) => res.data)
       .then((data) => {
         setData(data)
         console.log(data)
